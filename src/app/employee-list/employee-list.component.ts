@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Employee, EmployeeService} from '../employee.service';
 import {EmployeeNewModalComponent} from '../employee-new-modal/employee-new-modal.component';
 import {EmployeeEditModalComponent} from '../employee-edit-modal/employee-edit-modal.component';
+import {EmployeeDeleteModalComponent} from '../employee-delete-modal/employee-delete-modal.component';
 
 @Component({
     selector: 'employee-list',
@@ -13,12 +14,16 @@ export class EmployeeListComponent implements OnInit {
     employee: Employee;
     showMessageSuccess = false;
     employeeToEdit: Employee;
-
+    employeeToDelete: Employee;
+    data = new Date();
     @ViewChild(EmployeeNewModalComponent) // pegar referencia de um elemento
     employeeNewModal: EmployeeNewModalComponent;
 
     @ViewChild(EmployeeEditModalComponent) // pegar referencia de um elemento
     employeeEditModal: EmployeeEditModalComponent;
+
+    @ViewChild(EmployeeDeleteModalComponent) // pegar referencia de um elemento
+    employeeDeleteModal: EmployeeDeleteModalComponent;
 
     constructor(public employeeService: EmployeeService) {
     }
@@ -35,12 +40,21 @@ export class EmployeeListComponent implements OnInit {
         this.employeeEditModal.show();
     }
 
+    openDestroyModal(employee: Employee) {
+        this.employeeToDelete = employee;
+        this.employeeDeleteModal.show();
+    }
+
     onNewEmployee(employee: Employee) {
         this.employee = employee;
         this.showMessageSuccess = true;
     }
 
     onEditEmployee(employee: Employee) {
+        console.log(employee);
+    }
+
+    onDestroyEmployee(employee: Employee) {
         console.log(employee);
     }
 }

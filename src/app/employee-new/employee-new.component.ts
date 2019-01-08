@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import employees from '../employees';
 import {Employee, EmployeeService} from '../employee.service';
 
-//Data binding
 @Component({
     selector: 'employee-new',
     templateUrl: './employee-new.component.html',

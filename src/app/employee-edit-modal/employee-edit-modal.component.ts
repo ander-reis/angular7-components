@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import {Component, ElementRef, OnInit, EventEmitter, Input, Output} from '@angular/core';
 import {Employee} from '../employee.service';
 
 
@@ -13,7 +13,6 @@ export class EmployeeEditModalComponent implements OnInit {
 
     @Input()
     employee: Employee;
-
     @Output()
     onSubmit: EventEmitter<Employee> = new EventEmitter<Employee>();
 
