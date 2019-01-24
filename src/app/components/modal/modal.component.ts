@@ -6,7 +6,14 @@ declare const $;
     <div class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <ng-content></ng-content>
+          <div class="modal-header">
+            <ng-content select="[modal-title]"></ng-content>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <ng-content select="[modal-body]"></ng-content>
+          <ng-content select="[modal-footer]"></ng-content>
         </div>
       </div>
     </div>
@@ -15,9 +22,14 @@ declare const $;
 })
 export class ModalComponent implements OnInit {
 
-  constructor(private element: ElementRef) { }
+  constructor(private element: ElementRef) {
+  }
 
   ngOnInit() {
+    const nativeElement: HTMLElement = this.element.nativeElement;
+    nativeElement.querySelector('[modal-title]').classList.add('modal-title');
+    nativeElement.querySelector('[modal-body]').classList.add('modal-body');
+    nativeElement.querySelector('[modal-footer]').classList.add('modal-footer');
   }
 
   show() {
