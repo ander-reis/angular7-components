@@ -1,33 +1,26 @@
 <!-- Modal -->
 <form (submit)="addEmployee()">
-
     <modal>
         <h5 modal-title>Novo Empregado</h5>
-
         <div modal-body>
-
             <div class="form-group">
                 <label>Nome</label>
                 <input type="text" class="form-control" name="name" [(ngModel)]="employee.name">
                 <!-- Two way data binding -->
             </div>
-
             <div class="form-group">
                 <label>Salario</label>
                 <input type="text" class="form-control" name="salary" [(ngModel)]="employee.salary">
                 <!-- Two way data binding -->
             </div>
-
             <div class="form-group" [hidden]="employee.salary >= 1000">
                 <label>Bonus</label>
                 <input type="text" class="form-control" name="bonus" [(ngModel)]="employee.bonus">
             </div>
-
         </div>
         <div modal-footer>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Incluir</button>
         </div>
     </modal>
-
 </form>

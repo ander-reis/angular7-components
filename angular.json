@@ -128,5 +128,10 @@
       }
     }
   },
-  "defaultProject": "iniciando-angular2-mais"
+  "defaultProject": "iniciando-angular2-mais",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

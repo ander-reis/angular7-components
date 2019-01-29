@@ -1,0 +1,2 @@
+comando para mudar style do projeto:
+ng config schematics.@schematics/angular:component.styleext scss
