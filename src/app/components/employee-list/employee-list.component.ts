@@ -3,6 +3,7 @@ import {Employee, EmployeeService} from '../../services/employee.service';
 import {EmployeeNewModalComponent} from '../employee-new-modal/employee-new-modal.component';
 import {EmployeeEditModalComponent} from '../employee-edit-modal/employee-edit-modal.component';
 import {EmployeeDeleteModalComponent} from '../employee-delete-modal/employee-delete-modal.component';
+import {EmployeeDetailModalComponent} from '../employee-detail-modal/employee-detail-modal.component';
 
 @Component({
     selector: 'employee-list',
@@ -15,8 +16,9 @@ export class EmployeeListComponent implements OnInit {
     showMessageSuccess = false;
     employeeToEdit: Employee;
     employeeToDelete: Employee;
+    employeeToDetail: Employee;
     data = new Date();
-    @ViewChild(EmployeeNewModalComponent) // pegar referencia de um elemento
+    @ViewChild('employeeNewModal') // pegar referencia de um elemento
     employeeNewModal: EmployeeNewModalComponent;
 
     @ViewChild(EmployeeEditModalComponent) // pegar referencia de um elemento
@@ -24,6 +26,9 @@ export class EmployeeListComponent implements OnInit {
 
     @ViewChild(EmployeeDeleteModalComponent) // pegar referencia de um elemento
     employeeDeleteModal: EmployeeDeleteModalComponent;
+
+    @ViewChild(EmployeeDetailModalComponent)
+    employeeDetailModal: EmployeeDetailModalComponent;
 
     constructor(public employeeService: EmployeeService) {
     }
@@ -43,6 +48,11 @@ export class EmployeeListComponent implements OnInit {
     openDestroyModal(employee: Employee) {
         this.employeeToDelete = employee;
         this.employeeDeleteModal.show();
+    }
+
+    openDetailModal(employee: Employee) {
+        this.employeeToDetail = employee;
+        this.employeeDetailModal.show();
     }
 
     onNewEmployee(employee: Employee) {

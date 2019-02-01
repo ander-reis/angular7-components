@@ -17,6 +17,9 @@ export class EmployeeNewModalComponent extends Modalable implements OnInit {
         bonus: 0,
     };
 
+    @ViewChild('inputName')
+    inputName: ElementRef;
+
     @Output()
     onSubmit: EventEmitter<Employee> = new EventEmitter<Employee>();
 
@@ -25,7 +28,11 @@ export class EmployeeNewModalComponent extends Modalable implements OnInit {
     }
 
     ngOnInit() {
-        //super.ngOnInit();
+        super.ngOnInit();
+        this.onShow.subscribe(() => {
+            console.log(this.inputName);
+            this.inputName.nativeElement.focus();
+        });
     }
 
     addEmployee(event) {
