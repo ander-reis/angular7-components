@@ -1,6 +1,50 @@
+<!--<ng-container *ngTemplateOutlet="logo"></ng-container>-->
+<ng-container *ngTemplateOutlet="logo; context: objContext"></ng-container>
+
+<div>
+    <!--<ng-container *ngTemplateOutlet="flagLogo ? logo : logoSmall; context: objContext"></ng-container>-->
+    <ng-container *ngTemplateOutlet="logo; context: objContext"></ng-container>
+</div>
+
+<!--<p>-->
+    <!--<ng-container [ngSwitch]="role">-->
+        <!--<ng-container *ngSwitchCase="admin">-->
+            <!--<ng-container [ngTemplateOutlet]="headerAdmin"></ng-container>-->
+        <!--</ng-container>-->
+        <!--<ng-container *ngSwitchCase="manager">-->
+            <!--<ng-container [ngTemplateOutlet]="headerManager"></ng-container>-->
+        <!--</ng-container>-->
+    <!--</ng-container>-->
+<!--</p>-->
+
 <employee-list></employee-list>
+
 <app-test-ng-content>
     <div>conteudo</div>
     <span>outro texto</span>
     texto
 </app-test-ng-content>
+
+<!--<ng-container *ngTemplateOutlet="logo"></ng-container>-->
+
+<ng-template #logo let-nome="name" let-variavel>
+    <img src="/assets/slider_001.jpg" alt="">
+    {{title}}
+    {{nome}}
+    {{variavel}}
+    <button class="btn btn-primary" (click)="mudarNome()">Nome</button>
+</ng-template>
+
+<ng-template #logoSmall let-nome1="name">
+    <img src="/assets/slider_001.jpg" alt="" width="30" height="30">
+    {{title}}
+    {{nome1}}
+</ng-template>
+
+<ng-template #headerAdmin>
+    <!--<component-header-admin></component-header-admin>-->
+</ng-template>
+
+<ng-template #headerManager>
+    <!--<component-header-manager></component-header-manager>-->
+</ng-template>

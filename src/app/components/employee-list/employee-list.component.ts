@@ -18,6 +18,7 @@ export class EmployeeListComponent implements OnInit {
     employeeToDelete: Employee;
     employeeToDetail: Employee;
     data = new Date();
+    isLoading = true;
     @ViewChild('employeeNewModal') // pegar referencia de um elemento
     employeeNewModal: EmployeeNewModalComponent;
 
@@ -34,6 +35,9 @@ export class EmployeeListComponent implements OnInit {
     }
 
     ngOnInit() {
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 5000);
     }
 
     openNewModal() {

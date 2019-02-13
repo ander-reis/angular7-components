@@ -4,6 +4,11 @@
     </alert-success>
     <div class="row">
         <h1>Nossos empregados</h1>
+
+        <ng-container *ngIf="isLoading">
+            <ng-container [ngTemplateOutlet]="loading"></ng-container>
+        </ng-container>
+
         {{ data | date: 'dd/MM/yyyy' }}
         <table class="table table-striped">
             <thead>
@@ -21,17 +26,19 @@
             </thead>
             <tbody>
             <tr *ngFor="let employee of employeeService.employees;let i=index;" [id]="'tr'+i">
-                <td>
-                    <a href="javascript:void(0);" (click)="openDetailModal(employee)">
-                        {{employee.name}}
-                    </a>
-                </td>
-                <td [innerHtml]="employee.salary | myCurrency" [salaryColor]="employee.salary"></td>
-                <td>{{employee.bonus}}</td>
-                <td>
-                    <a href="javascript:void(0)" (click)="openEditModal(employee)">Editar</a> |
-                    <a href="javascript:void(0)" (click)="openDestroyModal(employee)">Excluir</a>
-                </td>
+                <!--<ng-container *ngIf="employee.salary > 1000">-->
+                    <td>
+                        <a href="javascript:void(0);" (click)="openDetailModal(employee)">
+                            {{employee.name}}
+                        </a>
+                    </td>
+                    <td [innerHtml]="employee.salary | myCurrency" [salaryColor]="employee.salary"></td>
+                    <td>{{employee.bonus}}</td>
+                    <td>
+                        <a href="javascript:void(0)" (click)="openEditModal(employee)">Editar</a> |
+                        <a href="javascript:void(0)" (click)="openDestroyModal(employee)">Excluir</a>
+                    </td>
+                <!--</ng-container>-->
             </tr>
             </tbody>
         </table>
@@ -42,3 +49,7 @@
 <employee-new-modal (onSubmit)="onNewEmployee($event)" (onHide)="fechou($event)" #employeeNewModal></employee-new-modal>
 <employee-edit-modal [employee]="employeeToEdit" (onSubmit)="onEditEmployee($event)"></employee-edit-modal>
 <employee-delete-modal [employee]="employeeToDelete" (onDestroy)="onDestroyEmployee($event)"></employee-delete-modal>
+
+<ng-template #loading>
+    Carregando ...
+</ng-template>
