@@ -15,6 +15,14 @@ import {ModalComponent} from './components/modal/modal.component';
 import {TestNgContentComponent} from './components/test-ng-content/test-ng-content.component';
 import {TesteComponent} from './teste/teste.component';
 import {EmployeeDetailModalComponent} from './components/employee-detail-modal/employee-detail-modal.component';
+import {InputDirective} from './directives/input.directive';
+import {GetViewContainerDirective} from './directives/get-view-container.directive';
+import {TestDynamicComponentComponent} from './components/test-dynamic-component/test-dynamic-component.component';
+import { ModalDynamicComponent } from './components/modal-dynamic/modal-dynamic/modal-dynamic.component';
+import { ModalContentDirective } from './components/modal-dynamic/modal-content.directive';
+import { ModalTitleComponent } from './components/modal-dynamic/modal-title/modal-title.component';
+import { ModalBodyComponent } from './components/modal-dynamic/modal-body/modal-body.component';
+import { ModalFooterComponent } from './components/modal-dynamic/modal-footer/modal-footer.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +39,18 @@ import {EmployeeDetailModalComponent} from './components/employee-detail-modal/e
         TestNgContentComponent,
         TesteComponent,
         EmployeeDetailModalComponent,
+        InputDirective,
+        GetViewContainerDirective,
+        TestDynamicComponentComponent,
+        ModalDynamicComponent,
+        ModalContentDirective,
+        ModalTitleComponent,
+        ModalBodyComponent,
+        ModalFooterComponent,
+    ],
+    entryComponents: [
+        TestDynamicComponentComponent,
+        EmployeeListComponent
     ],
     imports: [
         BrowserModule,
