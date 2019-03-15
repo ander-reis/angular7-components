@@ -2,6 +2,8 @@ import {AfterViewInit, Component, ComponentFactoryResolver, OnInit, TemplateRef,
 import {GetViewContainerDirective} from './directives/get-view-container.directive';
 import {TestDynamicComponentComponent} from './components/test-dynamic-component/test-dynamic-component.component';
 import {EmployeeListComponent} from './components/employee-list/employee-list.component';
+import {ModalService} from './components/modal-dynamic/modal.service';
+import {TestModalDynamicComponent} from './components/test-modal-dynamic/test-modal-dynamic.component';
 
 @Component({
     selector: 'app-root',
@@ -24,7 +26,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     ];
     indexComponents = -1;
 
-    constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+    constructor(private componentFactoryResolver: ComponentFactoryResolver, private modalService: ModalService) {
 
     }
 
@@ -38,6 +40,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         //     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.components[this.indexComponents]);
         //     this.getViewContainer.viewContainerRef.createComponent(componentFactory);
         // }, 4000);
+
+        /**
+         * modal dynamic
+         */
+        const modalRef = this.modalService.create(TestModalDynamicComponent);
+        modalRef.show();
     }
 
     ngAfterViewInit() {

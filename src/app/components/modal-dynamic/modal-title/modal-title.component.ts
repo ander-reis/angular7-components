@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'modal-title',
@@ -10,17 +10,8 @@ import {Component, ElementRef, OnInit} from '@angular/core';
             </button>
         </div>
     `,
-    styleUrls: []
+    styleUrls: ['./modal-title.component.scss']
 })
-export class ModalTitleComponent implements OnInit {
-
-    constructor(private element: ElementRef) {
-    }
-
-    ngOnInit() {
-        const nativeElement: HTMLElement = this.element.nativeElement;
-        const firstChild = nativeElement.firstChild.firstChild;
-        (<any>firstChild).classList.add('modal-title');
-    }
+export class ModalTitleComponent {
 
 }

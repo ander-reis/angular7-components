@@ -4,6 +4,7 @@ import {EmployeeNewModalComponent} from '../employee-new-modal/employee-new-moda
 import {EmployeeEditModalComponent} from '../employee-edit-modal/employee-edit-modal.component';
 import {EmployeeDeleteModalComponent} from '../employee-delete-modal/employee-delete-modal.component';
 import {EmployeeDetailModalComponent} from '../employee-detail-modal/employee-detail-modal.component';
+import {ModalService} from '../modal-dynamic/modal.service';
 
 @Component({
     selector: 'employee-list',
@@ -14,16 +15,10 @@ export class EmployeeListComponent implements OnInit {
 
     employee: Employee;
     showMessageSuccess = false;
-    employeeToEdit: Employee;
     employeeToDelete: Employee;
     employeeToDetail: Employee;
     data = new Date();
     isLoading = true;
-    @ViewChild('employeeNewModal') // pegar referencia de um elemento
-    employeeNewModal: EmployeeNewModalComponent;
-
-    @ViewChild(EmployeeEditModalComponent) // pegar referencia de um elemento
-    employeeEditModal: EmployeeEditModalComponent;
 
     @ViewChild(EmployeeDeleteModalComponent) // pegar referencia de um elemento
     employeeDeleteModal: EmployeeDeleteModalComponent;
@@ -31,7 +26,7 @@ export class EmployeeListComponent implements OnInit {
     @ViewChild(EmployeeDetailModalComponent)
     employeeDetailModal: EmployeeDetailModalComponent;
 
-    constructor(public employeeService: EmployeeService) {
+    constructor(public employeeService: EmployeeService, private modalService: ModalService) {
     }
 
     ngOnInit() {
@@ -41,12 +36,23 @@ export class EmployeeListComponent implements OnInit {
     }
 
     openNewModal() {
-        this.employeeNewModal.show();
+        const modalRef = this.modalService.create(EmployeeNewModalComponent);
+
+        modalRef.onHide.subscribe((event) => {
+            console.log(event);
+        });
+
+        modalRef.show();
     }
 
     openEditModal(employee: Employee) {
-        this.employeeToEdit = employee;
-        this.employeeEditModal.show();
+        const modalRef = this.modalService.create(EmployeeEditModalComponent, { employee });
+
+        modalRef.onHide.subscribe((event) => {
+            console.log(event);
+        });
+
+        modalRef.show();
     }
 
     openDestroyModal(employee: Employee) {
@@ -72,7 +78,7 @@ export class EmployeeListComponent implements OnInit {
         console.log(employee);
     }
 
-    fechou($event){
+    fechou($event) {
         console.log($event);
     }
 }

@@ -1,6 +1,6 @@
-import {Component, ElementRef, OnInit, EventEmitter, Input, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../services/employee.service';
-import {Modalable} from '../modal/modalable';
+import {ModalRefService} from '../modal-dynamic/modal-ref.service';
 
 declare const $;
 
@@ -9,25 +9,20 @@ declare const $;
     templateUrl: './employee-edit-modal.component.html',
     styleUrls: ['./employee-edit-modal.component.css']
 })
-export class EmployeeEditModalComponent extends Modalable implements OnInit {
+export class EmployeeEditModalComponent implements OnInit {
 
-    @Input()
     employee: Employee;
-    @Output()
-    onSubmit: EventEmitter<Employee> = new EventEmitter<Employee>();
 
-    constructor() {
-        super();
+    constructor(private modalRef: ModalRefService) {
+        this.employee = this.modalRef.context['employee'];
     }
 
     ngOnInit() {
-        super.ngOnInit();
     }
 
-    addEmployee(event) {
+    editEmployee(event) {
         const copy = Object.assign({}, this.employee);
-        this.onSubmit.emit(copy);
-        this.hide();
+        this.modalRef.hide({employee: copy, submitted: true});
     }
 
     // show() {

@@ -23,6 +23,7 @@ import { ModalContentDirective } from './components/modal-dynamic/modal-content.
 import { ModalTitleComponent } from './components/modal-dynamic/modal-title/modal-title.component';
 import { ModalBodyComponent } from './components/modal-dynamic/modal-body/modal-body.component';
 import { ModalFooterComponent } from './components/modal-dynamic/modal-footer/modal-footer.component';
+import { TestModalDynamicComponent } from './components/test-modal-dynamic/test-modal-dynamic.component';
 
 @NgModule({
     declarations: [
@@ -47,10 +48,15 @@ import { ModalFooterComponent } from './components/modal-dynamic/modal-footer/mo
         ModalTitleComponent,
         ModalBodyComponent,
         ModalFooterComponent,
+        TestModalDynamicComponent,
     ],
     entryComponents: [
         TestDynamicComponentComponent,
-        EmployeeListComponent
+        EmployeeListComponent,
+        ModalDynamicComponent,
+        TestModalDynamicComponent,
+        EmployeeNewModalComponent,
+        EmployeeEditModalComponent
     ],
     imports: [
         BrowserModule,
