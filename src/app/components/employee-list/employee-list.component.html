@@ -1,15 +1,12 @@
 <div class="container">
-    <alert-success [hidden]="!showMessageSuccess">
-        O empregado <strong>{{  employee?.name }}</strong> foi cadastrado com sucesso!
+
+    <alert-success [hidden]="!successMessage.show">
+        <span [innerHTML]="successMessage.message"></span>
     </alert-success>
+
     <div class="row">
         <h1>Nossos empregados</h1>
 
-        <ng-container *ngIf="isLoading">
-            <ng-container [ngTemplateOutlet]="loading"></ng-container>
-        </ng-container>
-
-        {{ data | date: 'dd/MM/yyyy' }}
         <table class="table table-striped">
             <thead>
             <tr>
@@ -25,29 +22,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let employee of employeeService.employees;let i=index;" [id]="'tr'+i">
-                <!--<ng-container *ngIf="employee.salary > 1000">-->
-                    <td>
-                        <a href="javascript:void(0);" (click)="openDetailModal(employee)">
-                            {{employee.name}}
-                        </a>
-                    </td>
-                    <td [innerHtml]="employee.salary | myCurrency" [salaryColor]="employee.salary"></td>
-                    <td>{{employee.bonus}}</td>
-                    <td>
-                        <a href="javascript:void(0)" (click)="openEditModal(employee)">Editar</a> |
-                        <a href="javascript:void(0)" (click)="openDestroyModal(employee)">Excluir</a>
-                    </td>
-                <!--</ng-container>-->
+            <tr *ngFor="let employee of employeeService.employees">
+                <td>
+                    <a href="javascript:void(0);" (click)="openDetailModal(employee)">
+                        {{employee.name}}
+                    </a>
+                </td>
+                <td [innerHTML]="employee.salary | myCurrency" [salaryColor]="employee.salary"></td>
+                <td>{{employee.bonus}}</td>
+                <td>
+                    <a href="javascript:void(0)" (click)="openEditModal(employee)">Editar</a> |
+                    <a href="javascript:void(0)" (click)="openDestroyModal(employee)">Excluir</a>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-
-<employee-detail-modal [employee]="employeeToDetail"></employee-detail-modal>
-<employee-delete-modal [employee]="employeeToDelete" (onDestroy)="onDestroyEmployee($event)"></employee-delete-modal>
-
-<ng-template #loading>
-    Carregando ...
-</ng-template>

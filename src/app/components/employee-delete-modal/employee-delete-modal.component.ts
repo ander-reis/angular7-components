@@ -1,6 +1,6 @@
 import {Component, OnInit, Input, ElementRef, EventEmitter, Output} from '@angular/core';
 import {Employee, EmployeeService} from '../../services/employee.service';
-import {Modalable} from '../modal/modalable';
+import {ModalRefService} from '../modal-dynamic/modal-ref.service';
 
 declare const $;
 
@@ -9,26 +9,21 @@ declare const $;
     templateUrl: './employee-delete-modal.component.html',
     styleUrls: ['./employee-delete-modal.component.css']
 })
-export class EmployeeDeleteModalComponent extends Modalable implements OnInit {
+export class EmployeeDeleteModalComponent implements OnInit {
 
-    @Input()
     employee: Employee;
 
-    @Output()
-    oneDestroy: EventEmitter<Employee> = new EventEmitter<Employee>();
-
-    constructor(private employeeService: EmployeeService) {
-        super();
+    constructor(private employeeService: EmployeeService, private modalRef: ModalRefService) {
+        this.employee = this.modalRef.context['employee'];
     }
 
     ngOnInit() {
-        super.ngOnInit();
+
     }
 
     destroy() {
         const copy = Object.assign({}, this.employee);
         this.employeeService.destroyEmployee(this.employee);
-        this.oneDestroy.emit(copy);
-        this.hide();
+        this.modalRef.hide({employee: this.employee, submitted: true});
     }
 }
