@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, ViewChildren, OnDestroy} from '@angular/co
 import {Employee, EmployeeService} from '../../services/employee.service';
 import {InputDirective} from '../../directives/input.directive';
 import {ModalRefService} from '../modal-dynamic/modal-ref.service';
+import {HttpClient} from '@angular/common/http';
 
 declare const $;
 
@@ -18,16 +19,10 @@ export class EmployeeNewModalComponent implements OnInit, OnDestroy {
         bonus: 0,
     };
 
-    // @ViewChild(InputDirective)
-    // inputName: InputDirective;
-
     @ViewChild('inputSalary', {read: InputDirective})
     inputName: InputDirective;
 
-    @ViewChildren(InputDirective)
-    inputs;
-
-    constructor(private employeeService: EmployeeService, private modalRef: ModalRefService) {
+    constructor(private http: HttpClient, private employeeService: EmployeeService, private modalRef: ModalRefService) {
     }
 
     ngOnInit() {
@@ -36,26 +31,12 @@ export class EmployeeNewModalComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngAfterViewInit(){
-        console.log(this.inputs);
-    }
-
     addEmployee(event) {
-        const copy = Object.assign({}, this.employee);
-        this.employeeService.addEmployee(copy);
-        this.modalRef.hide({employee: copy, submitted: true});
+        this.http.post('http://localhost:3000/employees', this.employee)
+            .subscribe(data => this.modalRef.hide({employee: data, submitted: true}));
     }
 
     ngOnDestroy(): void {
         console.log('employee new modal destruido');
     }
-
-    // fechou(event) {
-    //     console.log(event);
-    //     this.onHide.emit(event);
-    // }
-    //
-    // mostrou(event) {
-    //     console.log(event);
-    // }
 }

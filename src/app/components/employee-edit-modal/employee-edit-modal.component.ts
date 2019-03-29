@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../services/employee.service';
 import {ModalRefService} from '../modal-dynamic/modal-ref.service';
+import {HttpClient} from '@angular/common/http';
 
 declare const $;
 
@@ -11,32 +12,24 @@ declare const $;
 })
 export class EmployeeEditModalComponent implements OnInit {
 
-    employee: Employee;
+    employeeId: number;
+    employee: Employee = {
+        name: '',
+        salary: 1,
+        bonus: 0
+    };
 
-    constructor(private modalRef: ModalRefService) {
-        this.employee = this.modalRef.context['employee'];
+    constructor(private http: HttpClient, private modalRef: ModalRefService) {
+        this.employeeId = this.modalRef.context['employeeId'];
     }
 
     ngOnInit() {
+        this.http.get<Employee>(`http://localhost:3000/employees/${this.employeeId}`)
+            .subscribe(data => this.employee = data);
     }
 
     editEmployee(event) {
-        const copy = Object.assign({}, this.employee);
-        this.modalRef.hide({employee: copy, submitted: true});
+        this.http.put(`http://localhost:3000/employees/${this.employee.id}`, this.employee)
+            .subscribe(data => this.modalRef.hide({employee: data, submitted: true}));
     }
-
-    // show() {
-    //     const divModal = this.getDivModal();
-    //     $(divModal).modal('show');
-    // }
-
-    // hide() {
-    //     const divModal = this.getDivModal();
-    //     $(divModal).modal('hide');
-    // }
-
-    // private getDivModal(): HTMLElement {
-    //     const nativeElement: HTMLElement = this.element.nativeElement;
-    //     return nativeElement.firstChild.firstChild as HTMLElement;
-    // }
 }

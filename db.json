@@ -35,12 +35,6 @@
       "name": "Funcionário z",
       "salary": 600,
       "bonus": 1000
-    },
-    {
-      "name": "Teste",
-      "salary": 1000,
-      "bonus": 0,
-      "id": 7
     }
   ]
 }

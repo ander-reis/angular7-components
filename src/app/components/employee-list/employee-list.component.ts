@@ -5,6 +5,7 @@ import {EmployeeEditModalComponent} from '../employee-edit-modal/employee-edit-m
 import {ModalService} from '../modal-dynamic/modal.service';
 import {EmployeeDeleteModalComponent} from '../employee-delete-modal/employee-delete-modal.component';
 import {EmployeeDetailModalComponent} from '../employee-detail-modal/employee-detail-modal.component';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'employee-list',
@@ -13,17 +14,21 @@ import {EmployeeDetailModalComponent} from '../employee-detail-modal/employee-de
 })
 export class EmployeeListComponent implements OnInit {
 
-    employee: Employee;
     successMessage = {
         message: '',
         show: false
     };
 
-    constructor(public employeeService: EmployeeService, private modalService: ModalService) {
+    employees: any = [];
+
+    constructor(
+        public employeeService: EmployeeService,
+        private modalService: ModalService,
+        private http: HttpClient) {
     }
 
     ngOnInit() {
-
+        this.getEmployees();
     }
 
     openDetailModal(employee: Employee) {
@@ -47,7 +52,7 @@ export class EmployeeListComponent implements OnInit {
     }
 
     openEditModal(employee: Employee) {
-        const modalRef = this.modalService.create(EmployeeEditModalComponent, {employee});
+        const modalRef = this.modalService.create(EmployeeEditModalComponent, {employeeId: employee.id});
 
         modalRef.onHide.subscribe((event) => {
             const eventData = event.data;
@@ -61,7 +66,7 @@ export class EmployeeListComponent implements OnInit {
     }
 
     openDestroyModal(employee: Employee) {
-        const modalRef = this.modalService.create(EmployeeDeleteModalComponent, {employee});
+        const modalRef = this.modalService.create(EmployeeDeleteModalComponent, {employeeId: employee.id});
 
         modalRef.onHide.subscribe((event) => {
             const eventData = event.data;
@@ -75,10 +80,18 @@ export class EmployeeListComponent implements OnInit {
     }
 
     showSuccessMessage(message) {
+        this.getEmployees();
         this.successMessage.message = message;
         this.successMessage.show = true;
         setTimeout(() => {
             this.successMessage.show = false;
         }, 3000);
+    }
+
+    getEmployees() {
+        this.http.get<Employee[]>('http://localhost:3000/employees')
+            .subscribe(data => {
+                this.employees = data;
+            });
     }
 }

@@ -1,6 +1,7 @@
-import {Component, OnInit, Input, ElementRef, EventEmitter, Output} from '@angular/core';
-import {Employee, EmployeeService} from '../../services/employee.service';
+import {Component, OnInit} from '@angular/core';
+import {Employee} from '../../services/employee.service';
 import {ModalRefService} from '../modal-dynamic/modal-ref.service';
+import {HttpClient} from '@angular/common/http';
 
 declare const $;
 
@@ -11,19 +12,24 @@ declare const $;
 })
 export class EmployeeDeleteModalComponent implements OnInit {
 
-    employee: Employee;
+    employeeId: number;
+    employee: Employee = {
+        name: '',
+        salary: 1,
+        bonus: 0
+    };
 
-    constructor(private employeeService: EmployeeService, private modalRef: ModalRefService) {
-        this.employee = this.modalRef.context['employee'];
+    constructor(private http: HttpClient, private modalRef: ModalRefService) {
+        this.employeeId = this.modalRef.context['employeeId'];
     }
 
     ngOnInit() {
-
+        this.http.get<Employee>(`http://localhost:3000/employees/${this.employeeId}`)
+            .subscribe(data => this.employee = data);
     }
 
     destroy() {
-        const copy = Object.assign({}, this.employee);
-        this.employeeService.destroyEmployee(this.employee);
-        this.modalRef.hide({employee: this.employee, submitted: true});
+        this.http.delete(`http://localhost:3000/employees/${this.employee.id}`)
+            .subscribe(data => this.modalRef.hide({employee: this.employee, submitted: true}));
     }
 }
