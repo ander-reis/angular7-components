@@ -3,3 +3,14 @@ ng config schematics.@schematics/angular:component.styleext scss
 
 comando servidor json-server (Habilitar API sem necessidade de backend)
 json-server db.json
+
+comando para criar component style e template inline
+ng g component nome_do_component --inlineStyle --inlineTemplate
+
+biblioteca lodash
+https://lodash.com/
+npm i --save lodash
+
+biblioteca ngx-pagination
+https://github.com/michaelbromley/ngx-pagination
+npm install ngx-pagination --save

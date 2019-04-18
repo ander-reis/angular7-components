@@ -20,6 +20,11 @@ import {ModalTitleComponent} from './components/modal-dynamic/modal-title/modal-
 import {ModalBodyComponent} from './components/modal-dynamic/modal-body/modal-body.component';
 import {ModalFooterComponent} from './components/modal-dynamic/modal-footer/modal-footer.component';
 import {HttpClientModule} from '@angular/common/http';
+import {EmployeeSearchComponent} from './components/employee-search/employee-search.component';
+import {EmployeeFilterPipe} from './pipes/employee-filter.pipe';
+import {SortColumnComponent} from './components/sort-column/sort-column.component';
+import {OrderPipe} from './pipes/order.pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
     declarations: [
@@ -40,6 +45,10 @@ import {HttpClientModule} from '@angular/common/http';
         ModalTitleComponent,
         ModalBodyComponent,
         ModalFooterComponent,
+        EmployeeSearchComponent,
+        EmployeeFilterPipe,
+        SortColumnComponent,
+        OrderPipe,
     ],
     entryComponents: [
         EmployeeListComponent,
@@ -52,7 +61,8 @@ import {HttpClientModule} from '@angular/common/http';
     imports: [
         BrowserModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        NgxPaginationModule
     ],
     providers: [],
     bootstrap: [AppComponent]

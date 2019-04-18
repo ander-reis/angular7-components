@@ -3,13 +3,14 @@ import {Employee, EmployeeService} from '../../services/employee.service';
 import {InputDirective} from '../../directives/input.directive';
 import {ModalRefService} from '../modal-dynamic/modal-ref.service';
 import {HttpClient} from '@angular/common/http';
+import {NotifyMessageService} from '../../services/notify-message.service';
 
 declare const $;
 
 @Component({
     selector: 'employee-new-modal',
     templateUrl: './employee-new-modal.component.html',
-    styleUrls: ['./employee-new-modal.component.css']
+    styleUrls: ['./employee-new-modal.component.scss']
 })
 export class EmployeeNewModalComponent implements OnInit, OnDestroy {
 
@@ -22,7 +23,11 @@ export class EmployeeNewModalComponent implements OnInit, OnDestroy {
     @ViewChild('inputSalary', {read: InputDirective})
     inputName: InputDirective;
 
-    constructor(private http: HttpClient, private employeeService: EmployeeService, private modalRef: ModalRefService) {
+    constructor(
+        private http: HttpClient,
+        private employeeService: EmployeeService,
+        private modalRef: ModalRefService,
+        private notifyMessage: NotifyMessageService) {
     }
 
     ngOnInit() {
@@ -33,7 +38,11 @@ export class EmployeeNewModalComponent implements OnInit, OnDestroy {
 
     addEmployee(event) {
         this.http.post('http://localhost:3000/employees', this.employee)
-            .subscribe(data => this.modalRef.hide({employee: data, submitted: true}));
+            .subscribe(
+                data => {this.modalRef.hide({employee: data, submitted: true});
+                    this.notifyMessage.success('Sucesso', `O empregado <strong>${this.employee.name}</strong> foi criado com sucesso`);
+                }
+            );
     }
 
     ngOnDestroy(): void {

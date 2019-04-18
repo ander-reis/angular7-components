@@ -1,28 +1,33 @@
 <div class="container">
 
-    <alert-success [hidden]="!successMessage.show">
-        <span [innerHTML]="successMessage.message"></span>
-    </alert-success>
-
     <div class="row">
         <h1>Nossos empregados</h1>
 
         <table class="table table-striped">
             <thead>
             <tr>
-                <td>
-                    <button class="btn btn-primary" (click)="openNewModal()">Novo Empregado</button>
+                <td colspan="4">
+                    <div class="row">
+                        <div class="col-2 col-md-1">
+                            <button class="btn btn-primary" (click)="openNewModal()" title="Novo Empregado">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="col-9 col-md-11">
+                            <employee-search (onSearch)="handleSearch($event)"></employee-search>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>
-                <th>Nome</th>
-                <th>Salário</th>
+                <th [sortColumn]="sortColumn" columnName="name">Nome</th>
+                <th [sortColumn]="sortColumn" columnName="salary">Salário</th>
                 <th>Bônus</th>
                 <th>Ações</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let employee of employees">
+            <tr *ngFor="let employee of employees | employeeFilter: search | order: sortColumn | paginate: pagination">
                 <td>
                     <a href="javascript:void(0);" (click)="openDetailModal(employee)">
                         {{employee.name}}
@@ -37,5 +42,6 @@
             </tr>
             </tbody>
         </table>
+        <pagination-controls previousLabel="Anterior" nextLabel="Próximo" (pageChange)="pagination.currentPage = $event"></pagination-controls>
     </div>
 </div>
