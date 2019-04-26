@@ -14,7 +14,7 @@
     },
     {
       "id": 3,
-      "name": "Beltrano da Silva",
+      "name": "Beltrano da Silva 1111",
       "salary": 900,
       "bonus": 5
     },
@@ -29,6 +29,18 @@
       "name": "Funcionário y",
       "salary": 700,
       "bonus": 100
+    },
+    {
+      "name": "teste",
+      "salary": "10",
+      "bonus": "100",
+      "id": 6
+    },
+    {
+      "name": "teste pagination",
+      "salary": 0,
+      "bonus": 0,
+      "id": 7
     }
   ]
 }

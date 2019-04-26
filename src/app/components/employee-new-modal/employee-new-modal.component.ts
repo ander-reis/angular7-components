@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild, ViewChildren, OnDestroy} from '@angular/core';
-import {Employee, EmployeeService} from '../../services/employee.service';
+import {EmployeeService} from '../../services/employee.service';
 import {InputDirective} from '../../directives/input.directive';
 import {ModalRefService} from '../modal-dynamic/modal-ref.service';
-import {HttpClient} from '@angular/common/http';
 import {NotifyMessageService} from '../../services/notify-message.service';
+import {Employee} from '../../models';
+import {EmployeeHttpService} from '../../services/employee-http.service';
 
 declare const $;
 
@@ -24,7 +25,7 @@ export class EmployeeNewModalComponent implements OnInit, OnDestroy {
     inputName: InputDirective;
 
     constructor(
-        private http: HttpClient,
+        private employeeHttp: EmployeeHttpService,
         private employeeService: EmployeeService,
         private modalRef: ModalRefService,
         private notifyMessage: NotifyMessageService) {
@@ -37,7 +38,7 @@ export class EmployeeNewModalComponent implements OnInit, OnDestroy {
     }
 
     addEmployee(event) {
-        this.http.post('http://localhost:3000/employees', this.employee)
+        this.employeeHttp.create(this.employee)
             .subscribe(
                 data => {this.modalRef.hide({employee: data, submitted: true});
                     this.notifyMessage.success('Sucesso', `O empregado <strong>${this.employee.name}</strong> foi criado com sucesso`);

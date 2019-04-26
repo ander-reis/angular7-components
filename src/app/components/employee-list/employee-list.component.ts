@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Employee} from '../../services/employee.service';
+import {Employee} from '../../models';
 import {EmployeeNewModalComponent} from '../employee-new-modal/employee-new-modal.component';
 import {EmployeeEditModalComponent} from '../employee-edit-modal/employee-edit-modal.component';
 import {ModalService} from '../modal-dynamic/modal.service';
 import {EmployeeDeleteModalComponent} from '../employee-delete-modal/employee-delete-modal.component';
 import {EmployeeDetailModalComponent} from '../employee-detail-modal/employee-detail-modal.component';
-import {HttpClient} from '@angular/common/http';
+import {EmployeeHttpService} from '../../services/employee-http.service';
 
 @Component({
     selector: 'employee-list',
@@ -20,12 +20,12 @@ export class EmployeeListComponent implements OnInit {
     pagination = {
         itemsPerPage: 2,
         currentPage: 1,
-        // totalItems: 5
+        totalItems: 0
     };
 
     constructor(
         private modalService: ModalService,
-        private http: HttpClient) {
+        private employeeHttp: EmployeeHttpService) {
     }
 
     ngOnInit() {
@@ -77,12 +77,30 @@ export class EmployeeListComponent implements OnInit {
     handleSearch(search) {
         this.search = search;
         this.pagination.currentPage = 1;
+        this.getEmployees();
+    }
+
+    handleSort($event) {
+        this.getEmployees();
+    }
+
+    handlerPagination(page) {
+        this.pagination.currentPage = page;
+        this.getEmployees();
     }
 
     getEmployees() {
-        this.http.get<Employee[]>('http://localhost:3000/employees')
-            .subscribe(data => {
-                this.employees = data;
-            });
+        this.employeeHttp.list({
+            search: this.search,
+            sort: this.sortColumn,
+            pagination: {
+                page: this.pagination.currentPage,
+                perPage: this.pagination.itemsPerPage
+            }
+        })
+            .subscribe(response => {
+            this.pagination.totalItems = +response.headers.get('X-Total-Count');
+            this.employees = response.body;
+        });
     }
 }

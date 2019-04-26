@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Employee} from '../../services/employee.service';
+import {Employee} from '../../models';
 import {ModalRefService} from '../modal-dynamic/modal-ref.service';
 import {HttpClient} from '@angular/common/http';
 import {NotifyMessageService} from '../../services/notify-message.service';
+import {EmployeeHttpService} from '../../services/employee-http.service';
 
 declare const $;
 
@@ -20,17 +21,17 @@ export class EmployeeDeleteModalComponent implements OnInit {
         bonus: 0
     };
 
-    constructor(private http: HttpClient, private modalRef: ModalRefService, private notifyMessage: NotifyMessageService) {
+    constructor(private employeeHttp: EmployeeHttpService, private modalRef: ModalRefService, private notifyMessage: NotifyMessageService) {
         this.employeeId = this.modalRef.context['employeeId'];
     }
 
     ngOnInit() {
-        this.http.get<Employee>(`http://localhost:3000/employees/${this.employeeId}`)
+        this.employeeHttp.get(this.employeeId)
             .subscribe(data => this.employee = data);
     }
 
     destroy() {
-        this.http.delete(`http://localhost:3000/employees/${this.employee.id}`)
+        this.employeeHttp.delete(this.employeeId)
             .subscribe(data => {
                 this.modalRef.hide({employee: this.employee, submitted: true});
                 this.notifyMessage.success('Sucesso', `O empregado <strong>${this.employee.name}</strong> foi excluído com sucesso`);

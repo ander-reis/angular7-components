@@ -20,14 +20,15 @@
                 </td>
             </tr>
             <tr>
-                <th [sortColumn]="sortColumn" columnName="name">Nome</th>
-                <th [sortColumn]="sortColumn" columnName="salary">Salário</th>
+                <th [sortColumn]="sortColumn" columnName="name" (onSort)="handleSort($event)">Nome</th>
+                <th [sortColumn]="sortColumn" columnName="salary" (onSort)="handleSort($event)">Salário</th>
                 <th>Bônus</th>
                 <th>Ações</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let employee of employees | employeeFilter: search | order: sortColumn | paginate: pagination">
+            <!--<tr *ngFor="let employee of employees | employeeFilter: search | order: sortColumn | paginate: pagination">-->
+            <tr *ngFor="let employee of employees | paginate: pagination">
                 <td>
                     <a href="javascript:void(0);" (click)="openDetailModal(employee)">
                         {{employee.name}}
@@ -42,6 +43,6 @@
             </tr>
             </tbody>
         </table>
-        <pagination-controls previousLabel="Anterior" nextLabel="Próximo" (pageChange)="pagination.currentPage = $event"></pagination-controls>
+        <pagination-controls previousLabel="Anterior" nextLabel="Próximo" (pageChange)="handlerPagination($event)"></pagination-controls>
     </div>
 </div>
