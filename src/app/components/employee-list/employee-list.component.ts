@@ -6,6 +6,7 @@ import {ModalService} from '../modal-dynamic/modal.service';
 import {EmployeeDeleteModalComponent} from '../employee-delete-modal/employee-delete-modal.component';
 import {EmployeeDetailModalComponent} from '../employee-detail-modal/employee-detail-modal.component';
 import {EmployeeHttpService} from '../../services/employee-http.service';
+import {NotifyMessageService} from '../../services/notify-message.service';
 
 @Component({
     selector: 'employee-list',
@@ -25,7 +26,8 @@ export class EmployeeListComponent implements OnInit {
 
     constructor(
         private modalService: ModalService,
-        private employeeHttp: EmployeeHttpService) {
+        private employeeHttp: EmployeeHttpService,
+        private notifyMessage: NotifyMessageService) {
     }
 
     ngOnInit() {
@@ -99,8 +101,13 @@ export class EmployeeListComponent implements OnInit {
             }
         })
             .subscribe(response => {
-            this.pagination.totalItems = +response.headers.get('X-Total-Count');
-            this.employees = response.body;
-        });
+                this.pagination.totalItems = +response.headers.get('X-Total-Count');
+                this.employees = response.body;
+            });
+            // }, (responseError: HttpErrorResponse) => {
+            //     if (responseError.status === 404) {
+            //         this.notifyMessage.error('Error', 'Recurso não encontrado');
+            //     }
+            // });
     }
 }
