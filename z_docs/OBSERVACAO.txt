@@ -1,6 +1,9 @@
 comando para mudar style do projeto:
 ng config schematics.@schematics/angular:component.styleext scss
 
+angular server
+ng serve
+
 comando servidor json-server (Habilitar API sem necessidade de backend)
 json-server db.json
 
